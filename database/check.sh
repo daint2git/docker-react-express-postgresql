@@ -1,0 +1,1 @@
+docker exec -it app-db psql -U postgres -d management-app -c "SELECT * FROM products"
