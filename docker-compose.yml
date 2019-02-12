@@ -11,6 +11,8 @@ services:
       - 6969:6969
       - 1234:1234
     environment:
+      - SERVER_HOST=server
+      - SERVER_PORT=9696
       - CHOKIDAR_USEPOLLING=true
   server:
     build:
@@ -25,6 +27,10 @@ services:
       - db
     depends_on:
       - db
+    environment:
+      - CLIENT_HOST=client
+      - CLIENT_PORT=6969
+      - DATABASE_CONNECTION_STRING=postgresql://postgres:password@db:5432/management-app
   db:
     image: postgres:9.6
     container_name: app-db

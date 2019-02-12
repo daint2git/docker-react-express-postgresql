@@ -2,18 +2,12 @@ import { steps } from 'redux-effects-steps'
 import axios from 'axios'
 
 const defaultAxios = axios.create({
-  baseURL: 'http://localhost:9696/api',
+  baseURL: '/api',
   timeout: 100000,
   withCredentials: true,
 })
 
 const fetch = (request, instance = defaultAxios) => instance(request)
-
-const testData = () => [
-  { id: 1, name: 'product 1' },
-  { id: 2, name: 'product 2' },
-  { id: 3, name: 'product 3' },
-]
 
 const INITIAL_STATE = () => ({
   list: [],
@@ -32,15 +26,12 @@ const createProductSuccess = ({ data }) => ({
   payload: data,
 })
 
-const testFetchData = () => new Promise((resolve, reject) => resolve({ data: testData() }))
-
 export const fetchProducts = () =>
   steps(
-    // fetch({
-    //   method: 'get',
-    //   url: 'products',
-    // }),
-    testFetchData(),
+    fetch({
+      method: 'get',
+      url: 'products',
+    }),
     fetchProductsSuccess,
   )
 

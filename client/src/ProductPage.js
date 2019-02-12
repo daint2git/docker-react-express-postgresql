@@ -4,10 +4,60 @@ import { connect } from 'react-redux'
 
 import { fetchProducts, createProduct } from './productReducer'
 
-const ProductItem = ({ name, ...rest }) => <div {...rest}>{name}</div>
+const styles = {
+  table: {
+    borderCollapse: 'collapse',
+    width: '100%',
+    border: '1px solid black',
+  },
+  th: {
+    height: 50,
+    border: '1px solid black',
+  },
+  td: {
+    border: '1px solid black',
+  },
+}
 
-const ProductList = ({ list = [], ...rest }) =>
-  list.map(item => <ProductItem key={item.id} name={item.name} {...rest} />)
+const ProductTableHead = () => (
+  <thead>
+    <tr>
+      <th style={styles.th}>name</th>
+      <th style={styles.th}>description</th>
+      <th style={styles.th}>image</th>
+      <th style={styles.th}>price</th>
+      <th style={styles.th}>quantity</th>
+      <th style={styles.th}>manufacturer</th>
+      <th style={styles.th}>category</th>
+    </tr>
+  </thead>
+)
+
+const ProductTableBody = ({ children }) => <tbody>{children}</tbody>
+
+const ProductTableRow = ({ product }) => (
+  <tr>
+    <td style={styles.td}>{product.name}</td>
+    <td style={styles.td}>{product.description}</td>
+    <td style={styles.td}>{product.image}</td>
+    <td style={styles.td}>{product.price}</td>
+    <td style={styles.td}>{product.quantity}</td>
+    <td style={styles.td}>{product.manufacturer}</td>
+    <td style={styles.td}>{product.category}</td>
+  </tr>
+)
+
+const ProductTable = ({ list }) => (
+  <table style={styles.table}>
+    <ProductTableHead />
+    <ProductTableBody>
+      <ProductContent list={list} />
+    </ProductTableBody>
+  </table>
+)
+
+const ProductContent = ({ list = [], ...rest }) =>
+  list.map(product => <ProductTableRow key={product.id} product={product} {...rest} />)
 
 class AddProductForm extends React.PureComponent {
   state = {
@@ -42,7 +92,7 @@ class ProductPage extends React.Component {
         <br />
         <div>
           <h2>Products</h2>
-          <ProductList list={list} />
+          <ProductTable list={list} />
         </div>
       </div>
     )
