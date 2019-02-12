@@ -44,7 +44,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DATABASE=management-app
+      - POSTGRES_DB=management-app
 volumes:
   db-data:
 networks:
