@@ -2,7 +2,7 @@ import { steps } from 'redux-effects-steps'
 import axios from 'axios'
 
 const defaultAxios = axios.create({
-  baseURL: '/api',
+  baseURL: API_URL,
   timeout: 100000,
   withCredentials: true,
 })

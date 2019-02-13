@@ -13,8 +13,8 @@ services:
       - frontend_network
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - SERVER_HOST=${SERVER_HOST}
-      - SERVER_PORT=9696
+      # - SERVER_HOST=${SERVER_HOST}
+      # - SERVER_PORT=9696
   server:
     build:
       context: ./server
@@ -30,8 +30,8 @@ services:
       - backend_network
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - CLIENT_HOST=${CLIENT_HOST}
-      - CLIENT_PORT=6969
+      # - CLIENT_HOST=${CLIENT_HOST}
+      # - CLIENT_PORT=6969
       - DATABASE_CONNECTION_STRING=postgresql://postgres:password@db:5432/management-app
   db:
     image: postgres:9.6
@@ -39,7 +39,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql
     ports:
-      - 25432:5432
+      - 15432:5432
     networks:
       - backend_network
     environment:

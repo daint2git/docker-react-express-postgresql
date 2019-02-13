@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const path = require('path')
@@ -6,6 +7,8 @@ const srcPath = path.resolve(rootDir, 'src')
 const assetsPath = path.resolve(rootDir, 'assets')
 const buildPath = path.resolve(rootDir, 'build')
 
+const client_host = process.env.CLIENT_HOST || '0.0.0.0'
+const client_port = process.env.CLIENT_PORT || 6969
 const server_host = process.env.SERVER_HOST || 'localhost'
 const server_port = process.env.SERVER_PORT || 9696
 
@@ -30,16 +33,16 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      API_URL: JSON.stringify(`http://${server_host}:${server_port}/api`),
+    }),
     new HtmlWebpackPlugin({
       template: `${assetsPath}/template.html`,
       favicon: `${assetsPath}/favicon.ico`,
     }),
   ],
   devServer: {
-    host: '0.0.0.0',
-    port: 6969,
-    proxy: {
-      '/api': `http://${server_host}:${server_port}`,
-    },
+    host: client_host,
+    port: client_port,
   },
 }
